@@ -1,124 +1,94 @@
-/* Carga de datos desde data.js */
+/* Estado global */
 let currentCategory = "GMV";
 let lastSearch = "";
 
-const list = document.getElementById('faq-list');
-const modal = document.getElementById('modal');
-const modalBody = document.getElementById('modal-body');
-const searchInput = document.getElementById('search');
-const navLinks = document.querySelectorAll('nav a');
+/* Elementos DOM */
+const list = document.getElementById("faq-list");
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modal-body");
+const searchInput = document.getElementById("search");
+const navLinks = document.querySelectorAll("nav a");
 
-/* Renderiza la lista de FAQs */
-function renderFaqs(data) {
-  list.innerHTML = '';
-  data.forEach(faq => {
-    const div = document.createElement('div');
-    div.className = 'faq';
-    div.innerHTML = `<strong>${faq.titulo}</strong><br><small>${faq.resumen}</small>`;
+/* Utilidad: resaltar texto */
+function highlight(text, search) {
+  if (!search) return text;
 
-    // Si tiene subFaqs, tipo accordion
-    if (faq.subFaqs && faq.subFaqs.length) {
-      div.classList.add('parent-faq');
-      div.onclick = () => toggleSubFaqs(faq, div);
-    } else {
-      // Si no tiene subFaqs, abrir modal al click
-      div.onclick = () => openModal(faq);
-    }
+  const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${escaped})`, "gi");
 
-    list.appendChild(div);
-
-    // mostrar subFaqs si estaban abiertas (por búsqueda)
-    if (faq.subFaqs && faq.subFaqs._open) {
-      showSubFaqs(faq, div);
-    }
-  });
+  return text.replace(regex, `<span class="highlight">$1</span>`);
 }
 
-/* Alterna sub-Faqs (accordion) */
-function toggleSubFaqs(faq, container) {
-  if (faq.subFaqs._open) {
-    // cerrar
-    const subDiv = container.querySelector('.sub-faqs');
-    if (subDiv) subDiv.remove();
-    faq.subFaqs._open = false;
+/* Render FAQs */
+function renderFaqs(data) {
+  list.innerHTML = "";
+
+  if (!data.length) {
+    list.innerHTML = "<p>No hay resultados.</p>";
     return;
   }
 
-  // cerrar otros abiertos
-  faqs.forEach(f => {
-    if (f !== faq && f.subFaqs && f.subFaqs._open) {
-      f.subFaqs._open = false;
-    }
+  data.forEach(faq => {
+    const div = document.createElement("div");
+    div.className = "faq";
+
+    div.innerHTML = `
+      <strong>${highlight(faq.titulo, lastSearch)}</strong><br>
+      <small>${highlight(faq.resumen, lastSearch)}</small>
+    `;
+
+    div.addEventListener("click", () => openModal(faq));
+    list.appendChild(div);
   });
-  document.querySelectorAll('.sub-faqs').forEach(d => d.remove());
-
-  // abrir
-  if (faq.subFaqs.length) showSubFaqs(faq, container);
-}
-
-/* Muestra sub-Faqs con animación */
-function showSubFaqs(faq, container) {
-  const div = document.createElement('div');
-  div.className = 'sub-faqs';
-  container.appendChild(div);
-
-  faq.subFaqs.forEach((sub, index) => {
-    const btn = document.createElement('button');
-    btn.className = 'sub-faq';
-    btn.textContent = sub.resumen;
-    btn.onclick = e => {
-      e.stopPropagation();
-      openModal(sub);
-    };
-    div.appendChild(btn);
-
-    setTimeout(() => btn.classList.add('show'), index * 100);
-  });
-
-  faq.subFaqs._open = true;
 }
 
 /* Abrir modal */
 function openModal(faq) {
   modalBody.innerHTML = `
-    <h2 style="background-color:#1e88d8;color:white;padding:10px;border-radius:5px;">${faq.titulo}</h2>
-    <p>${faq.descripcion || ""}</p>
+    <h2>${highlight(faq.titulo, lastSearch)}</h2>
+
+    ${
+      faq.descripcion
+        ? `<p class="modal-desc">${highlight(faq.descripcion, lastSearch)}</p>`
+        : ""
+    }
+
     <hr>
-    <ul>${faq.contenido.map(i => `<li>${i}</li>`).join('')}</ul>
+
+    <h3>Solución</h3>
+    <ul>
+      ${faq.contenido
+        .join("")}
+    </ul>
   `;
-  modal.classList.remove('hidden');
+
+  modal.classList.remove("hidden");
 }
 
+
 /* Cerrar modal */
-document.getElementById('close').onclick = () => modal.classList.add('hidden');
-// Cerrar modal al pulsar fuera del contenido
-modal.addEventListener('click', e => {
-  if (e.target === modal) modal.classList.add('hidden');
+document.getElementById("close").onclick = () => {
+  modal.classList.add("hidden");
+};
+
+modal.addEventListener("click", e => {
+  if (e.target === modal) modal.classList.add("hidden");
 });
 
-/* Búsqueda */
-searchInput.value = '';
-searchInput.addEventListener('input', e => {
-  const text = e.target.value.toLowerCase();
-  lastSearch = text;
+/* Buscar */
+searchInput.value = "";
+searchInput.addEventListener("input", e => {
+  lastSearch = e.target.value.toLowerCase();
 
-  const filtered = [];
+  if (!lastSearch) {
+    renderCategory(currentCategory);
+    return;
+  }
 
-  faqs.forEach(faq => {
-    if (faq.subFaqs && faq.subFaqs.length) {
-      const matchingSubs = faq.subFaqs.filter(sub => {
-        const combinedText = (
-          faq.resumen + " " + sub.resumen + " " + sub.titulo + " " + (sub.descripcion || "")
-        ).toLowerCase();
-        return combinedText.includes(text);
-      });
-
-      matchingSubs.forEach(sub => filtered.push({ categoria: faq.categoria, ...sub }));
-    } else {
-      const combinedText = (faq.titulo + " " + faq.resumen + " " + (faq.descripcion || "")).toLowerCase();
-      if (combinedText.includes(text)) filtered.push(faq);
-    }
-  });
+  const filtered = faqs.filter(f =>
+    f.titulo.toLowerCase().includes(lastSearch) ||
+    f.resumen.toLowerCase().includes(lastSearch)
+  );
 
   renderFaqs(filtered);
 });
@@ -126,27 +96,21 @@ searchInput.addEventListener('input', e => {
 /* Categorías */
 function renderCategory(cat) {
   currentCategory = cat;
+  lastSearch = "";
+  searchInput.value = "";
+
+  navLinks.forEach(l => l.classList.remove("active"));
+  document.querySelector(`nav a[data-cat="${cat}"]`)?.classList.add("active");
+
   const filtered = faqs.filter(f => f.categoria === cat);
   renderFaqs(filtered);
 }
 
 navLinks.forEach(link => {
-  link.addEventListener('click', e => {
+  link.addEventListener("click", e => {
     e.preventDefault();
-    const cat = link.dataset.cat;
-    renderCategory(cat);
-    navLinks.forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
+    renderCategory(link.dataset.cat);
   });
-});
-
-/* Contador soluciones al pasar el ratón */
-navLinks.forEach(link => {
-  const cat = link.dataset.cat;
-  const count = faqs
-    .filter(f => f.categoria === cat)
-    .reduce((acc, f) => acc + (f.subFaqs ? f.subFaqs.length : 1), 0);
-  link.title = `${cat} – ${count} soluciones`;
 });
 
 /* Inicialización */
