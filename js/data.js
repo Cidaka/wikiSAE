@@ -75,7 +75,7 @@ const faqsPorCategoria = {
 		]
 	},
 	{
-	  titulo: "EMV no se inicia.",
+	  titulo: "EMV (pago con tarjeta) no se inicia.",
 	  descripcion: "El módulo TV100 no inicia o ni siquiera enciende.",
 	  resumen: "Pantalla negra o ''Iniciando.....''.",
 	  contenido: [
