@@ -82,6 +82,15 @@ const faqsPorCategoria = {
 		"Con quitar 10 segundos la corriente de las baterías del coche, debería volver a funcionar e iniciar normalmente.",
 		"A veces, después de esto, da un error 4."
 	  ]
+	},
+	{
+	  titulo: "Numero de coche no válido.",
+	  descripcion: "Al intentar preparar una máquina para sustituir, no deja introducir el número del coche.",
+	  resumen: "No se puede meter el número del coche.",
+	  contenido: [
+		"La máquina está desactualizada y el coche es más nuevo.",
+    "Hay que actualizar la máquina para poder cambiar el número del coche."
+	  ]
 	}
   ],
 
