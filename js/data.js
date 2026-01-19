@@ -9,6 +9,9 @@
 		""
 	  ]
 	}
+
+Piensa que vamos a dar asistencia telefónica a un conductor que está en una situación crítica, posiblemente con una persona atrapada arriba del bus o con más gente que quiere continuar el viaje después de bajar a la persona... 
+De hecho hoy me ha pasado con el Iveco y le he guiado al conductor como he podido y ha conseguido guardar la rampa y bajar al hombre, entonces, necesito un resumen de cosas que puedan sacar del paso. En otokar vectio, hay un truco que es acelerar en vacío 10 segundos y probar la rampa, a veces funciona porque es un tema del alternador o algo así... el caso, házmelo por marcas tal cual te pasé el guion. Olvídate de momento de las imágenes, vamos a seguir con el sistema de solo texto tal cual...
  */
 
 const faqsPorCategoria = {
@@ -53,7 +56,8 @@ const faqsPorCategoria = {
 			descripcion: "La TV100 muestra en pantalla el error nº2.",
 			resumen: "Código de error 2.",
 			contenido: [
-			"Fallo de comunicación de la TV100. Avisar a los técnicos SAE."
+			"Fallo de comunicación de la TV100. Avisar a los técnicos SAE.",
+      "Revisar la FAQ 'EMV (pago con tarjeta) fuera de servicio'."
 			]
 			},
 			{
@@ -69,7 +73,8 @@ const faqsPorCategoria = {
 			descripcion: "La TV100 muestra en pantalla el error nº5.",
 			resumen: "Código de error 5.",
 			contenido: [
-			"Hay que avisar a los técnicos del SAE para cambiar la TV100."
+			"Hay que avisar a los técnicos del SAE para cambiar la TV100.",
+      "Revisar la FAQ 'EMV (pago con tarjeta) fuera de servicio'."
 			]
 			},
 		]
@@ -91,7 +96,47 @@ const faqsPorCategoria = {
 		"La máquina está desactualizada y el coche es más nuevo.",
     "Hay que actualizar la máquina para poder cambiar el número del coche."
 	  ]
-	}
+	},
+  {
+  titulo: "EMV (pago con tarjeta) falla con un viajero",
+  descripcion: "Un viajero no puede pagar con tarjeta bancaria.",
+  resumen: "Fallo puntual de pago con tarjeta.",
+  contenido: [
+    "Pedir al viajero que lo intente de nuevo.",
+    "Si falla, debe pagar en efectivo.",
+    "Si no tiene efectivo, no puede viajar."
+  ]
+},
+{
+  titulo: "EMV (pago con tarjeta) falla con varios viajeros",
+  descripcion: "Fallos de pago con tarjeta en distintos viajeros.",
+  resumen: "Fallos repetidos de pago con tarjeta.",
+  contenido: [
+    "Se considera problema del sistema EMV.",
+    "Si no hay efectivo, emitir billete coste cero.",
+    "Avisar de la incidencia a Técnico SAE."
+  ]
+},
+{
+  titulo: "EMV (pago con tarjeta) fuera de servicio",
+  descripcion: "El sistema EMV queda sin conexión o no funciona.",
+  resumen: "EMV fuera de servicio.",
+  contenido: [
+    "Cambio de bus, si no se puede, solicitar pago en efectivo.",
+    "Si no hay efectivo, permitir viajar con billete coste cero.",
+    "Al finalizar, rellenar Parte de Incidencias y avisar a Técnico SAE."
+  ]
+},
+{
+  titulo: "EMV (pago con tarjeta) cobra pero no imprime billete",
+  descripcion: "No se imprime billete tras un pago correcto.",
+  resumen: "Pago correcto sin impresión.",
+  contenido: [
+    "Si el sonido fue correcto, el pago es válido.",
+    "Permitir viajar al usuario.",
+    "La tarjeta del usuario sirve como justificante."
+  ]
+}
   ],
 
   PMR: [
@@ -102,7 +147,7 @@ const faqsPorCategoria = {
       contenido: []
     },
     {
-      titulo: "Bloqueo de la rampa fuera",
+      titulo: "Bloqueo de la rampa fuera.",
       descripcion: "La rampa ha salido pero ahora no baja ni sube.",
       resumen: "No funciona y está fuera.",
       contenido: [], 
@@ -123,6 +168,12 @@ const faqsPorCategoria = {
           titulo: "Irizar",
           descripcion: "",
           resumen: "Irizar",
+          contenido: [""]
+        },
+        {
+          titulo: "Iveco",
+          descripcion: "",
+          resumen: "Iveco",
           contenido: [""]
         },
         {
@@ -170,8 +221,39 @@ const faqsPorCategoria = {
       titulo: "No copia la tabla retén de buho",
       descripcion: "Al usar el botón 'copiar', sale un mensaje de error.",
       resumen: "Da error al copiar",
-      contenido: [ "Hay que asegurarse que la casilla de TSM esté rellena.", "Rellenar el campo y volver a intentar copiar." ]
-    }
+      contenido: [ 
+      "Hay que asegurarse que la casilla de TSM esté rellena.", 
+      "Rellenar el campo y volver a intentar copiar." 
+    ]
+    },
+	{
+	  titulo: "La hoja mañaneros no muestra todos los servicios.",
+	  descripcion: "No carga los turnos más allá de las 9:00.",
+	  resumen: "Faltan servicios en la tabla.",
+	  contenido: [
+    "¡ATENCION! Por la programación, tampoco carga el turno 1062 porque empieza con Relevo.",
+		"No es un fallo, está programado así."
+	  ]
+	},
+	{
+	  titulo: "Error de #¡REF! en el nombre del conductor.",
+	  descripcion: "",
+	  resumen: "Al escribir un código de conductor da error.",
+	  contenido: [
+		""
+	  ]
+	},
+	{
+	  titulo: "Hay un color raro en los coches.",
+	  descripcion: "Pequeña guía para los colores en la zona de los coches.",
+	  resumen: "Codigo de colores para los coches.",
+	  contenido: [
+    '<span style="background-color:#FFF9C4; color:#000000;">Uso limitado</span>',
+    '<span style="background-color:#000000; color:#00FF00; text-decoration:underline;">Coche no existe</span>',
+    '<span style="background-color:#FF5252; color:#FFFFFF;">Averiado / Paralizado</span>',
+    '<span style="background-color:rgba(144, 238, 144, 0.6); color:#000000;">Mantenimiento</span>'
+    ]
+	}
   ],
 
   BUS: [
@@ -179,7 +261,11 @@ const faqsPorCategoria = {
       titulo: "Bus no arranca",
       descripcion: "Al girar la llave, el bus hace un ruido atrás pero no arranca.",
       resumen: "Problema de motor",
-      contenido: ["Comprobar batería", "Revisar contacto", "Avisar taller"]
+      contenido: [
+      "Comprobar batería",
+      "Revisar contacto", 
+      "Avisar taller"
+    ]
     }
   ]
 };
