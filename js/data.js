@@ -237,10 +237,11 @@ const faqsPorCategoria = {
 	},
 	{
 	  titulo: "Error de #¡REF! en el nombre del conductor.",
-	  descripcion: "",
+	  descripcion: "La fórmula está mal o se vincula a otro archivo.",
 	  resumen: "Al escribir un código de conductor da error.",
 	  contenido: [
-		""
+		"Copiar formula de otra celda que funcione.",
+    "Al pegar, hacer pegado especial de sólo fórmulas (O usar icono pegar con 'fx')."
 	  ]
 	},
 	{
@@ -249,9 +250,9 @@ const faqsPorCategoria = {
 	  resumen: "Codigo de colores para los coches.",
 	  contenido: [
     '<span style="background-color:#FFF9C4; color:#000000;">Uso limitado</span>',
-    '<span style="background-color:#000000; color:#00FF00; text-decoration:underline;">Coche no existe</span>',
+    '<span style="background-color:#000000; color:#00FF00;">Coche no existe</span>',
     '<span style="background-color:#FF5252; color:#FFFFFF;">Averiado / Paralizado</span>',
-    '<span style="background-color:rgba(144, 238, 144, 0.6); color:#000000;">Mantenimiento</span>'
+    '<span style="background-color:rgba(119, 187, 119, 0.82); color:#000000;">Mantenimiento</span>'
     ]
 	}
   ],
