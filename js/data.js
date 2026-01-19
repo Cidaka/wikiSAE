@@ -249,10 +249,11 @@ const faqsPorCategoria = {
 	  descripcion: "Pequeña guía para los colores en la zona de los coches.",
 	  resumen: "Codigo de colores para los coches.",
 	  contenido: [
-    '<span style="background-color:#FFF9C4; color:#000000;">Uso limitado</span>',
-    '<span style="background-color:#000000; color:#00FF00;">Coche no existe</span>',
-    '<span style="background-color:#FF5252; color:#FFFFFF;">Averiado / Paralizado</span>',
-    '<span style="background-color:rgba(119, 187, 119, 0.82); color:#000000;">Mantenimiento</span>'
+    '<span style="background-color:#FFF9C4; color:#000000;">Uso limitado.</span>',
+    '<span style="background-color:#000000; color:#00FF00;">Coche no existe.</span>',
+    '<span style="background-color:#FF5252; color:#FFFFFF;">Averiado / Paralizado.</span>',
+    '<span style="background-color:rgba(119, 187, 119, 0.82); color:#000000;">Mantenimiento.</span>',
+    '<span style="background-color:#000000; color:#FFFFFF;">Coche duplicado (en el resumen de coches).</span>'
     ]
 	}
   ],
